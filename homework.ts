@@ -198,37 +198,55 @@ interface Car {
 
 type ApiResponse<T> = {
   data: {
-    [key: string]: T | number;
-    pagination: number;
-  };
+    [P in T extends Car ? "cars" :"users"]: T[];
+  } 
+  & 
+  { pagination: number }
+  & 
+  { errorMessage: string };
   errors: string[];
 };
 
+// type ApiResponse<T> = {
+//   data: {
+//     [key: string]: T[];
+//   } 
+//   & 
+//   {pagination: number}
+//   & 
+//   {errorMessage: string} ;
+//   errors: string[];
+// };
+
 //-------------Checks
 
-let objUser: ApiResponse<User> = {
+let car : ApiResponse<Car> = {
   data: {
-    user: {
-      id: 23,
-      age: 23,
-      name: "Max",
-    },
-    pagination: 23,
-  },
-  errors: [],
-};
-
-let objCar: ApiResponse<Car> = {
-  data: {
-    user: {
-      id: 23,
-      color: "black",
+    cars: [{
+      id: 1,
+      color: "red",
       numberOfDoors: 4,
-    },
-    pagination: 23,
+    }],
+    pagination:23,
+    errorMessage:"None"
+    
   },
-  errors: ["yes", "no"],
-};
+  errors: ["Yes", "No"]
+}
+
+let user : ApiResponse<User> = {
+  data: {
+    users: [{
+      id: 1,
+      name: "Daniil",
+      age: 20
+    }],
+    pagination: 23,
+    errorMessage: "None"
+    
+  },
+  errors: ["Yes", "No"]
+}
 
 //------------------------------------
 
